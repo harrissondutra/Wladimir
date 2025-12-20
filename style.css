@@ -655,7 +655,7 @@ footer {
 }
 
 .wa-btn {
-    background-color: #25D366;
+    background: transparent;
     color: #fff;
     width: 60px;
     height: 60px;
@@ -663,12 +663,10 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Ensures horizontal centering */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
-    border: 2px solid #fff;
+    border: none;
     padding: 0;
-    /* Removing padding to prevent misalignment */
 }
 
 .wa-btn:hover {
@@ -676,13 +674,11 @@ footer {
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
 }
 
-.wa-icon {
-    width: 34px;
-    /* Slightly larger for better visual balance */
-    height: 34px;
-    fill: currentColor;
+.wa-icon-img {
+    width: 100%;
+    height: 100%;
     display: block;
-    /* Removes inline spacing issues */
+    object-fit: contain;
 }
 
 .wa-tooltip {
