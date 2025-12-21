@@ -18,9 +18,15 @@
 
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP & Lenis (Premium Animations) -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 </head>
 
 <body>
+    <div class="noise-overlay"></div>
 
     <!-- Navbar -->
     <nav class="navbar">
@@ -35,7 +41,8 @@
                 <li><a href="#servicos">Serviços</a></li>
                 <li><a href="#galeria">Resultados</a></li>
                 <li><a href="#social-preview">Redes Sociais</a></li>
-                <li><a href="https://wa.me/5585996913642" class="btn-nav" target="_blank">Começar Agora</a>
+                <li><a href="https://wa.me/5585996913642?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20come%C3%A7ar!"
+                        class="btn-nav" target="_blank">Começar Agora</a>
                 </li>
             </ul>
         </div>
@@ -52,7 +59,8 @@
             <h1>TRANSFORMO <br> <span class="text-gradient">RESULTADOS REAIS</span> <br>TODOS OS DIAS</h1>
             <p>Tenha o acompanhamento de um Vice-Campeão Olympia e alcance sua melhor versão com o método Elite.</p>
             <div class="hero-buttons">
-                <a href="https://wa.me/5585996913642" target="_blank" class="btn btn-primary">
+                <a href="https://wa.me/5585996913642?text=Ol%C3%A1%2C%20quero%20evoluir%20meus%20resultados%20agora!"
+                    target="_blank" class="btn btn-primary">
                     QUERO EVOLUIR AGORA <i data-lucide="arrow-right"></i>
                 </a>
                 <a href="#sobre" class="btn btn-outline">CONHECER O TREINADOR</a>
@@ -122,8 +130,8 @@
                     <h3>Consultoria Online</h3>
                     <p>Treino e dieta na palma da sua mão. planilhas personalizadas, análise de vídeos e suporte via
                         WhatsApp para você treinar onde quiser com minha orientação.</p>
-                    <a href="https://wa.me/5585996913642" target="_blank" class="btn-text">Saiba mais <i
-                            data-lucide="arrow-right"></i></a>
+                    <a href="https://wa.me/5585996913642?text=Ol%C3%A1%2C%20tenho%20interesse%20na%20Consultoria%20Online."
+                        target="_blank" class="btn-text">Saiba mais <i data-lucide="arrow-right"></i></a>
                 </div>
                 <div class="service-card reveal-bottom delay-2">
                     <div class="icon-box">
@@ -132,7 +140,8 @@
                     <h3>Personal Trainer Presencial</h3>
                     <p>Acompanhamento exclusivo durante seus treinos. Correção biomecânica, motivação e intensidade
                         máxima para garantir que você extraia 100% de cada sessão.</p>
-                    <a href="https://wa.me/5585996913642" target="_blank" class="btn-text">Ver disponibilidade
+                    <a href="https://wa.me/5585996913642?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20a%20disponibilidade%20para%20Personal%20Trainer."
+                        target="_blank" class="btn-text">Ver disponibilidade
                         <i data-lucide="arrow-right"></i></a>
                 </div>
                 <div class="service-card reveal-bottom delay-3">
@@ -142,12 +151,13 @@
                     <h3>Mentoria para Atletas</h3>
                     <p>Preparação completa para competições. Poses, finalização, estratégia de palco e tudo que um
                         campeão precisa para vencer.</p>
-                    <a href="https://wa.me/5585996913642" target="_blank" class="btn-text">Aplicar agora <i
-                            data-lucide="arrow-right"></i></a>
+                    <a href="https://wa.me/5585996913642?text=Ol%C3%A1%2C%20quero%20aplicar%20para%20a%20Mentoria%20de%20Atletas."
+                        target="_blank" class="btn-text">Aplicar agora <i data-lucide="arrow-right"></i></a>
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- Gallery Section -->
     <section id="galeria" class="gallery">
@@ -157,18 +167,28 @@
                 <p>Um pouco da minha trajetória e shape</p>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item">
+                <div class="gallery-item lightbox-trigger" data-src="images/gallery1.jpg">
                     <img src="images/gallery1.jpg" alt="Foto Galeria 1">
+                    <div class="item-overlay"><i data-lucide="maximize-2"></i></div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item lightbox-trigger" data-src="images/service.jpg">
                     <img src="images/service.jpg" alt="Foto Galeria 2">
+                    <div class="item-overlay"><i data-lucide="maximize-2"></i></div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item lightbox-trigger" data-src="images/gallery2.jpg">
                     <img src="images/gallery2.jpg" alt="Foto Galeria 3">
+                    <div class="item-overlay"><i data-lucide="maximize-2"></i></div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div class="lightbox-caption"></div>
+    </div>
 
     <!-- Social Media Preview Section -->
     <section id="social-preview" class="social-preview">
@@ -212,7 +232,8 @@
         <div class="container">
             <h2>PRONTO PARA A SUA MELHOR VERSÃO?</h2>
             <p>Não deixe para amanhã. Entre para o time agora mesmo.</p>
-            <a href="https://wa.me/5585996913642" target="_blank" class="btn btn-primary btn-lg">QUERO COMEÇAR
+            <a href="https://wa.me/5585996913642?text=Ol%C3%A1%2C%20estou%20pronto%20para%20minha%20melhor%20vers%C3%A3o!"
+                target="_blank" class="btn btn-primary btn-lg">QUERO COMEÇAR
                 AGORA</a>
         </div>
     </section>
@@ -243,11 +264,13 @@
     <!-- WhatsApp Widget -->
     <div class="wa-widget">
         <div class="wa-tooltip">Fale Conosco</div>
-        <a href="https://wa.me/5585996913642" target="_blank" class="wa-btn" aria-label="Fale pelo WhatsApp">
+        <a href="https://wa.me/5585996913642?text=Ol%C3%A1%2C%20preciso%20de%20ajuda." target="_blank" class="wa-btn"
+            aria-label="Fale pelo WhatsApp">
             <img src="images/whatsapp.svg" alt="WhatsApp" class="wa-icon-img">
         </a>
     </div>
 
+    <script src="content.js"></script>
     <script src="script.js"></script>
     <script>
         lucide.createIcons();
