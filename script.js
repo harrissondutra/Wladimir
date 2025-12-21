@@ -2,40 +2,169 @@
 lucide.createIcons();
 
 // --- 1. CMS / Data Rendering (Scalability) ---
-function renderContent() {
-    // Ideally, we would stick to the static HTML for SEO and just use JS for enhancements,
-    // but to demonstrate scalability/templates, we can update text dynamically if needed.
-    // For now, we will assume the HTML is already populated or we can strictly use this to 'hydrate' the page
-    // allowing the user to just edit content.js.
+// Language State
+let currentLang = 'pt';
 
-    // Example: Update Hero Title dynamically
-    const heroTitle = document.querySelector('.hero h1');
-    if (heroTitle && typeof siteData !== 'undefined') {
-        heroTitle.innerHTML = siteData.hero.title;
+function setLanguage(lang) {
+    currentLang = lang;
+    const data = siteData[lang];
+    if (!data) return;
+
+    // 0. Navigation
+    const navItems = document.querySelectorAll('.nav-links li a');
+    if (data.navigation) {
+        navItems.forEach((link, index) => {
+            if (data.navigation[index]) {
+                link.textContent = data.navigation[index];
+            }
+        });
     }
 
-    // Hydrate WhatsApp Links
-    if (typeof siteData !== 'undefined' && siteData.whatsappMessages) {
-        const wa = siteData.whatsappMessages;
-        const setLink = (selector, msg) => {
-            const el = document.querySelector(selector);
-            if (el) el.href = `${wa.base}?text=${msg}`;
-        };
+    // 1. Hero
+    document.querySelector('.badget').textContent = data.hero.badge;
+    document.querySelector('.hero h1').innerHTML = data.hero.title;
+    document.querySelector('.hero p').textContent = data.hero.subtitle;
+    document.querySelector('.hero-buttons .btn-primary').innerHTML = `${data.hero.btnPrimary} <i data-lucide="arrow-right"></i>`;
+    document.querySelector('.hero-buttons .btn-outline').textContent = data.hero.btnSecondary;
 
-        setLink('.hero-buttons .btn-primary', wa.hero);
-        setLink('.nav-links .btn-nav', wa.navbar);
-        setLink('.service-card:nth-child(1) .btn-text', wa.consultoria);
-        setLink('.service-card:nth-child(2) .btn-text', wa.personal);
-        setLink('.service-card:nth-child(3) .btn-text', wa.mentoria);
-        setLink('.cta-banner .btn', wa.cta_footer);
-        setLink('.wa-btn', wa.widget);
+    // 2. Achievements
+    const stats = document.querySelectorAll('.stat-item');
+    stats.forEach((item, index) => {
+        if (data.achievements[index]) {
+            item.querySelector('h3').textContent = data.achievements[index].title;
+            item.querySelector('p').textContent = data.achievements[index].text;
+        }
+    });
+
+    // 3. About
+    document.querySelector('.about h2').innerHTML = data.about.title;
+    const aboutParas = document.querySelectorAll('.about-text p');
+    if (aboutParas.length >= 2) {
+        aboutParas[0].textContent = data.about.description[0];
+        aboutParas[1].textContent = data.about.description[1];
     }
+    const aboutList = document.querySelectorAll('.about-list li');
+    aboutList.forEach((li, index) => {
+        if (data.about.features[index]) {
+            // Preserve icon
+            const icon = li.querySelector('i'); // or svg
+            li.innerHTML = '';
+            if (icon) li.appendChild(icon);
+            else {
+                // re-add icon check-circle if missing
+                const i = document.createElement('i');
+                i.setAttribute('data-lucide', 'check-circle');
+                li.appendChild(i);
+            }
+            li.append(` ${data.about.features[index]}`);
+        }
+    });
 
-    // In a full implementation, we would map all fields here.
+    // 4. Services
+    document.querySelector('.services .section-header h2').textContent = data.services.header.title;
+    document.querySelector('.services .section-header p').textContent = data.services.header.subtitle;
+
+    const cards = document.querySelectorAll('.service-card');
+    cards.forEach((card, index) => {
+        if (data.services.cards[index]) {
+            card.querySelector('h3').textContent = data.services.cards[index].title;
+            card.querySelector('p').textContent = data.services.cards[index].description;
+            // Handle Button Text inside Link
+            const btn = card.querySelector('.btn-text');
+            btn.innerHTML = `${data.services.cards[index].cta} <i data-lucide="arrow-right"></i>`;
+        }
+    });
+
+    // 5. Gallery & Social & CTA
+    document.querySelector('.gallery .section-header h2').textContent = data.gallery.title;
+    document.querySelector('.gallery .section-header p').textContent = data.gallery.subtitle;
+
+    document.querySelector('.social-preview .section-header h2').textContent = data.social.title;
+    document.querySelector('.social-preview .section-header p').textContent = data.social.subtitle;
+    document.querySelector('.instagram-card .social-content p').textContent = data.social.insta;
+    document.querySelector('.tiktok-card .social-content p').textContent = data.social.tiktok;
+
+    document.querySelector('.cta-banner h2').textContent = data.cta_footer.title;
+    document.querySelector('.cta-banner p').textContent = data.cta_footer.subtitle;
+    document.querySelector('.cta-banner .btn').textContent = data.cta_footer.btn;
+
+    // 6. WhatsApp Links
+    const wa = data.whatsappMessages;
+    const setLink = (selector, msg) => {
+        const el = document.querySelector(selector);
+        if (el) el.href = `${wa.base}?text=${msg}`;
+    };
+
+    setLink('.hero-buttons .btn-primary', wa.hero);
+    setLink('.nav-links .btn-nav', wa.navbar);
+    setLink('.service-card:nth-child(1) .btn-text', wa.consultoria);
+    setLink('.service-card:nth-child(2) .btn-text', wa.personal);
+    setLink('.service-card:nth-child(3) .btn-text', wa.mentoria);
+    setLink('.cta-banner .btn', wa.cta_footer);
+    setLink('.wa-btn', wa.widget);
+
+    // Re-render icons if needed (sometimes innerHTML wipes them)
+    lucide.createIcons();
+}
+
+function createLanguageSwitcher() {
+    const switcher = document.createElement('div');
+    switcher.className = 'lang-switcher';
+    switcher.innerHTML = `
+        <button id="btn-pt" class="active">PT</button>
+        <span class="divider"></span>
+        <button id="btn-en">EN</button>
+    `;
+    document.body.appendChild(switcher);
+
+    // Initial Styles via JS to avoid modifying style.css heavily
+    Object.assign(switcher.style, {
+        position: 'fixed',
+        bottom: '2rem',
+        left: '2rem',
+        zIndex: '1000',
+        background: 'rgba(5, 5, 5, 0.8)',
+        backdropFilter: 'blur(10px)',
+        padding: '0.5rem 1rem',
+        borderRadius: '50px',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem'
+    });
+
+    const btns = switcher.querySelectorAll('button');
+    btns.forEach(btn => {
+        Object.assign(btn.style, {
+            background: 'none',
+            border: 'none',
+            color: '#fff',
+            fontWeight: '600',
+            cursor: 'pointer',
+            opacity: '0.5',
+            transition: '0.3s'
+        });
+        if (btn.classList.contains('active')) {
+            btn.style.opacity = '1';
+            btn.style.color = '#D4AF37'; // Gold
+        }
+
+        btn.addEventListener('click', () => {
+            const lang = btn.id === 'btn-pt' ? 'pt' : 'en';
+            setLanguage(lang);
+            btns.forEach(b => {
+                b.style.opacity = '0.5';
+                b.style.color = '#fff';
+            });
+            btn.style.opacity = '1';
+            btn.style.color = '#D4AF37';
+        });
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // renderContent(); // Optional: Enable to overwrite HTML with JSON data
+    createLanguageSwitcher();
+    setLanguage('pt'); // Default to PT (Also hydrates links)
     initPremiumExperience();
 });
 
@@ -291,5 +420,94 @@ if (mobileMenuBtn) {
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
         navLinks.classList.remove('active');
+    });
+});
+
+
+// --- 3. Name Capture Modal Logic ---
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('name-modal');
+    const input = document.getElementById('client-name');
+    const confirmBtn = document.getElementById('confirm-name');
+    const closeBtn = document.querySelector('.modal-close');
+    let pendingUrl = '';
+
+    // Function to open modal
+    function openModal(originalUrl) {
+        pendingUrl = originalUrl;
+        modal.style.display = 'flex';
+        // Force reflow for transition
+        setTimeout(() => modal.classList.add('active'), 10);
+        input.value = ''; // Reset input
+        setTimeout(() => input.focus(), 100); // Auto focus
+    }
+
+    // Function to close modal
+    function closeModal() {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+
+    // Intercept WhatsApp Clicks
+    // Select links starting with https://wa.me
+    // We use a delegated event listener just in case links are dynamic
+    document.body.addEventListener('click', (e) => {
+        const target = e.target.closest('a');
+        if (target && target.href && target.href.includes('wa.me')) {
+            e.preventDefault();
+            openModal(target.href);
+        }
+    });
+
+    // Confirm Action
+    confirmBtn.addEventListener('click', () => {
+        const name = input.value.trim();
+        if (!name) {
+            input.style.borderColor = 'red';
+            return;
+        }
+
+        // Parse the URL to inject the name
+        // Format: wa.me/number?text=OldText
+        let finalUrl = pendingUrl;
+
+        if (pendingUrl.includes('?text=')) {
+            const parts = pendingUrl.split('?text=');
+            const base = parts[0];
+            const oldMsg = decodeURIComponent(parts[1]);
+
+            // Construct new message: "Olá Wladimir, meu nome é [Name]. [OldMsg]"
+            // Context aware greeting
+            const greeting = currentLang === 'pt' ? `Ol%C3%A1%20Wladimir%2C%20meu%20nome%20%C3%A9%20${encodeURIComponent(name)}.%20` : `Hello%20Wladimir%2C%20my%20name%20is%20${encodeURIComponent(name)}.%20`;
+
+            // We append the new greeting BEFORE the specific request
+            // Actually, simply prepending "My name is X. " is safer.
+            finalUrl = `${base}?text=${greeting}${parts[1]}`;
+        } else {
+            // No text param? Just add it.
+            const msg = currentLang === 'pt' ? `Ol%C3%A1%2C%20meu%20nome%20%C3%A9%20${encodeURIComponent(name)}.` : `Hello%2C%20my%20name%20is%20${encodeURIComponent(name)}.`;
+            finalUrl = `${pendingUrl}?text=${msg}`;
+        }
+
+        window.open(finalUrl, '_blank');
+        closeModal();
+    });
+
+    // Close actions
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    // Enter key support
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') confirmBtn.click();
+    });
+
+    // Remove red border on input
+    input.addEventListener('input', () => {
+        input.style.borderColor = '#333';
     });
 });
