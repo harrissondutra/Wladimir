@@ -74,14 +74,21 @@ const siteData = {
             subtitle: "Não deixe para amanhã. Entre para o time agora mesmo.",
             btn: "QUERO COMEÇAR AGORA"
         },
+        modal: {
+            title: "Como devo te chamar?",
+            p: "Para um atendimento exclusivo, digite seu nome abaixo.",
+            placeholder: "Seu nome aqui...",
+            btn: "INICIAR CONVERSA"
+        },
         whatsappMessages: {
             base: "https://wa.me/5585996913642",
-            hero: "Ol%C3%A1%2C%20quero%20evoluir%20meus%20resultados%20agora!",
-            navbar: "Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20come%C3%A7ar!",
-            consultoria: "Ol%C3%A1%2C%20tenho%20interesse%20na%20Consultoria%20Online.",
-            personal: "Ol%C3%A1%2C%20gostaria%20de%20saber%20a%20disponibilidade%20para%20Personal%20Trainer.",
-            mentoria: "Ol%C3%A1%2C%20tenho%20interesse%20na%20Mentoria%20para%20Atletas.",
-            cta_footer: "Ol%C3%A1%2C%20estou%20pronto%20para%20minha%20melhor%20vers%C3%A3o!",
+            greetingTemplate: "Olá Wladimir, meu nome é {name}. ",
+            hero: "quero%20evoluir%20meus%20resultados%20agora!",
+            navbar: "vim%20pelo%20site%20e%20gostaria%20de%20come%C3%A7ar!",
+            consultoria: "tenho%20interesse%20na%20Consultoria%20Online.",
+            personal: "gostaria%20de%20saber%20a%20disponibilidade%20para%20Personal%20Trainer.",
+            mentoria: "tenho%20interesse%20na%20Mentoria%20para%20Atletas.",
+            cta_footer: "estou%20pronto%20para%20minha%20melhor%20vers%C3%A3o!",
             widget: "gostaria%20de%20ajuda."
         }
     },
@@ -162,13 +169,14 @@ const siteData = {
         },
         whatsappMessages: {
             base: "https://wa.me/5585996913642",
-            hero: "Hello%2C%20I%20want%20to%20evolve%20my%20results%20now!",
-            navbar: "Hello%2C%20I%20saw%20the%20site%20and%20would%20like%20to%20start!",
-            consultoria: "Hello%2C%20I%20am%20interested%20in%20Online%20Consulting.",
-            personal: "Hello%2C%20I%20would%20like%20to%20know%20availability%20for%20Personal%20Training.",
-            mentoria: "Hello%2C%20I%20am%20interested%20in%20Athlete%20Mentorship.",
-            cta_footer: "Hello%2C%20I%20am%20ready%20for%20my%20best%20version!",
-            widget: "Hello%2C%20I%20need%20help."
+            greetingTemplate: "Hello Wladimir, my name is {name}. ",
+            hero: "I%20want%20to%20evolve%20my%20results%20now!",
+            navbar: "I%20saw%20the%20site%20and%20would%20like%20to%20start!",
+            consultoria: "I%20am%20interested%20in%20Online%20Consulting.",
+            personal: "I%20would%20like%20to%20know%20availability%20for%20Personal%20Training.",
+            mentoria: "I%20am%20interested%20in%20Athlete%20Mentorship.",
+            cta_footer: "I%20am%20ready%20for%20my%20best%20version!",
+            widget: "I%20need%20help."
         }
     }
 };

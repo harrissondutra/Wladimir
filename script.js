@@ -103,6 +103,22 @@ function setLanguage(lang) {
     setLink('.cta-banner .btn', wa.cta_footer);
     setLink('.wa-btn', wa.widget);
 
+    setLink('.wa-btn', wa.widget);
+
+    // 7. Modal (New Dynamic)
+    if (data.modal) {
+        document.querySelector('.modal-content h3').textContent = data.modal.title;
+        document.querySelector('.modal-content p').textContent = data.modal.p;
+        document.querySelector('#client-name').placeholder = data.modal.placeholder;
+        // Preserve Icon in Button
+        const btn = document.querySelector('#confirm-name');
+        const iconInfo = btn.querySelector('i') || document.createElement('i');
+        iconInfo.setAttribute('data-lucide', 'message-circle');
+
+        btn.textContent = data.modal.btn + ' '; // Add space
+        btn.appendChild(iconInfo);
+    }
+
     // Re-render icons if needed (sometimes innerHTML wipes them)
     lucide.createIcons();
 }
@@ -478,16 +494,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const base = parts[0];
             const oldMsg = decodeURIComponent(parts[1]);
 
-            // Construct new message: "Olá Wladimir, meu nome é [Name]. [OldMsg]"
-            // Context aware greeting
-            const greeting = currentLang === 'pt' ? `Ol%C3%A1%20Wladimir%2C%20meu%20nome%20%C3%A9%20${encodeURIComponent(name)}.%20` : `Hello%20Wladimir%2C%20my%20name%20is%20${encodeURIComponent(name)}.%20`;
+            // Construct new message: "[Greeting Template] [OldMsg]"
+            // Context aware greeting from CMS
+            const data = siteData[currentLang];
+            let template = data.whatsappMessages.greetingTemplate || (currentLang === 'pt' ? "Olá Wladimir, meu nome é {name}. " : "Hello Wladimir, my name is {name}. ");
+
+            // Replace placeholder and encode
+            const greeting = encodeURIComponent(template.replace('{name}', name));
 
             // We append the new greeting BEFORE the specific request
-            // Actually, simply prepending "My name is X. " is safer.
             finalUrl = `${base}?text=${greeting}${parts[1]}`;
         } else {
             // No text param? Just add it.
-            const msg = currentLang === 'pt' ? `Ol%C3%A1%2C%20meu%20nome%20%C3%A9%20${encodeURIComponent(name)}.` : `Hello%2C%20my%20name%20is%20${encodeURIComponent(name)}.`;
+            const data = siteData[currentLang];
+            let template = data.whatsappMessages.greetingTemplate || (currentLang === 'pt' ? "Olá Wladimir, meu nome é {name}. " : "Hello Wladimir, my name is {name}. ");
+            const msg = encodeURIComponent(template.replace('{name}', name));
+
             finalUrl = `${pendingUrl}?text=${msg}`;
         }
 
