@@ -82,7 +82,7 @@ const siteData = {
             personal: "Ol%C3%A1%2C%20gostaria%20de%20saber%20a%20disponibilidade%20para%20Personal%20Trainer.",
             mentoria: "Ol%C3%A1%2C%20tenho%20interesse%20na%20Mentoria%20para%20Atletas.",
             cta_footer: "Ol%C3%A1%2C%20estou%20pronto%20para%20minha%20melhor%20vers%C3%A3o!",
-            widget: "Ol%C3%A1%2C%20preciso%20de%20ajuda."
+            widget: "gostaria%20de%20ajuda."
         }
     },
     en: {
