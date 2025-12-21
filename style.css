@@ -223,24 +223,38 @@ ul {
 @media (max-width: 968px) {
     .navbar .container {
         justify-content: space-between;
+        padding-left: 1.5rem;
+        /* Safe area */
+        padding-right: 1.5rem;
+    }
+
+    .logo {
+        position: relative;
+        z-index: 1002;
+        /* Ensure logo stays above if needed, or matched with menu */
     }
 
     .nav-links {
         position: fixed;
         background: #000;
+        /* Solid black for better contrast */
         top: 0;
         right: -100%;
-        /* Hidden */
         height: 100vh;
-        width: 70%;
+        width: 100%;
+        /* Full width on smaller mobile for better touch targets */
+        max-width: 300px;
+        /* But capped */
         flex-direction: column;
         justify-content: center;
-        transform: none;
-        /* Reset center transform */
-        left: auto;
+        transform: none !important;
+        /* Force reset */
+        left: auto !important;
+        /* Force reset */
         transition: 0.4s ease;
         padding: 2rem;
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+        z-index: 1001;
     }
 
     .nav-links.active {
@@ -249,17 +263,42 @@ ul {
 
     .desktop-cta {
         display: none;
-        /* Hide desktop button on mobile */
     }
 
     .mobile-cta {
         display: block;
-        /* Show inside menu */
-        margin-top: 1rem;
+        margin-top: 2rem;
+        width: 100%;
+    }
+
+    .mobile-cta .btn-nav {
+        display: block;
+        text-align: center;
+        width: 100%;
     }
 
     .menu-toggle {
         display: block;
+        z-index: 1002;
+        /* Above the menu background */
+        font-size: 1.8rem;
+        /* Larger touch target */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        /* More width on small phones */
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        /* Smaller text for small screens */
+    }
+
+    .hero p {
+        font-size: 1rem;
     }
 }
 
@@ -1156,11 +1195,22 @@ html.lenis {
     }
 
     .menu-toggle {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         z-index: 1001;
         background: rgba(255, 255, 255, 0.1);
-        padding: 0.5rem;
+        width: 48px;
+        height: 48px;
         border-radius: 4px;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-toggle i {
+        width: 28px;
+        height: 28px;
+        color: #fff;
     }
 
     /* Hero Mobile */
@@ -1213,11 +1263,16 @@ html.lenis {
     .wa-widget {
         bottom: 1.5rem;
         right: 1.5rem;
+        will-change: transform;
+        /* Hardware acceleration hint */
+        transform: translateZ(0);
+        /* Force GPU layer to prevent scroll jitter */
     }
 
     .wa-btn {
-        width: 50px;
-        height: 50px;
+        width: 55px;
+        /* Slightly larger for easier touch */
+        height: 55px;
     }
 
     .wa-icon {
