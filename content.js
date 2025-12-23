@@ -21,7 +21,7 @@ const siteData = {
         },
         achievements: [
             { icon: "trophy", title: "Vice-Campeão", text: "Olympia Brasil" },
-            { icon: "medal", title: "Vice-Campeão", text: "Olympia Argentina" },
+            { icon: "medal", title: "Campeão Overall", text: "Muscle Content" },
             { icon: "award", title: "+20 Títulos", text: "Carreira Vitoriosa" }
         ],
         about: {
@@ -44,12 +44,12 @@ const siteData = {
             cards: [
                 {
                     title: "Consultoria Online",
-                    description: "Treino e dieta na palma da sua mão. planilhas personalizadas, análise de vídeos e suporte via WhatsApp para você treinar onde quiser com minha orientação.",
+                    description: "Treino e acompanhamento, na palma da sua mão. planilhas personalizadas, análise de vídeos e suporte via WhatsApp para você treinar onde quiser com minha orientação.",
                     cta: "Saiba mais"
                 },
                 {
-                    title: "Personal Trainer Presencial",
-                    description: "Acompanhamento exclusivo durante seus treinos. Correção biomecânica, motivação e intensidade máxima para garantir que você extraia 100% de cada sessão.",
+                    title: "Treinador pessoal",
+                    description: "Acompanhamento presencial focado em execução segura, disciplina e performance.",
                     cta: "Ver disponibilidade"
                 },
                 {
