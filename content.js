@@ -10,6 +10,7 @@ const siteData = {
             "Serviços",
             "Resultados",
             "Redes Sociais",
+            "Área restrita",
             "Começar Agora"
         ],
         hero: {
@@ -103,6 +104,7 @@ const siteData = {
             "Services",
             "Results",
             "Socials",
+            "Restricted area",
             "Start Now"
         ],
         hero: {
