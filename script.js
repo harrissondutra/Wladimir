@@ -91,8 +91,11 @@ function setLanguage(lang) {
     // 6. WhatsApp Links
     const wa = data.whatsappMessages;
     const setLink = (selector, msg) => {
-        const el = document.querySelector(selector);
-        if (el) el.href = `${wa.base}?text=${msg}`;
+        document.querySelectorAll(selector).forEach((el) => {
+            const destino = el.getAttribute('href') || '';
+            if (destino.includes('areaInterna')) return;
+            el.href = `${wa.base}?text=${msg}`;
+        });
     };
 
     setLink('.hero-buttons .btn-primary', wa.hero);
